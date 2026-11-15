@@ -1,0 +1,14 @@
+{
+  "name": "Minimalist Code",
+  "short_name": "Minimalist Code",
+  "description": "A lightweight in-browser code editor with a VS Code-like experience.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#1e1e1e",
+  "theme_color": "#1e1e1e",
+  "icons": [
+    { "src": "android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "android-chrome-512x512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

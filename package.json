@@ -1,0 +1,26 @@
+{
+  "name": "minimalist-code",
+  "version": "1.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A lightweight, browser-based code editor with a VS Code-like experience, powered by Monaco.",
+  "license": "ISC",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
+  "dependencies": {
+    "monaco-editor": "0.57.0"
+  },
+  "devDependencies": {
+    "vite": "8.3.5"
+  },
+  "overrides": {
+    "dompurify": "3.4.17"
+  }
+}
