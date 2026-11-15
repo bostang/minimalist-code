@@ -21,6 +21,8 @@ minimalist-code/
 ├── index.html               # App shell, theme colors, status bar layout
 ├── index.js                 # Main entry point wiring all modules
 ├── vite.config.mjs          # Vite config, Monaco ESM path aliases, Content-Security-Policy
+├── firebase.json            # Firebase Hosting: headers, caching, predeploy build
+├── .firebaserc              # Firebase project ID
 ├── package.json
 ├── public/                  # Icons and web app manifest (copied as-is)
 ├── test/
@@ -59,6 +61,27 @@ To prevent your browser from intercepting shortcuts like `Ctrl+W`, `Ctrl+N`, or 
 
 ## Deploying
 
+Live site: **https://minimalist-code-2bf77.web.app** (Firebase Hosting, project `minimalist-code-2bf77`).
+
+### Firebase Hosting
+
+The Firebase CLI is a pinned dev dependency, so no global install is needed. Sign in once per machine:
+
+```bash
+npx firebase login
+```
+
+| Command | What it does |
+| :--- | :--- |
+| `npm run deploy:preview` | Deploy to a temporary preview URL (expires after 7 days) to check a release first |
+| `npm run deploy` | Deploy to the live site |
+
+Both run the tests and a fresh production build first (the `predeploy` hook in `firebase.json`), so a failing test stops the deploy. `firebase.json` also sets the security headers and caching rules listed below. To roll back, use **Hosting → Release history** in the Firebase console.
+
+No secrets or `.env` file are needed: the app uses no Firebase SDK, and the CLI keeps your login in your user profile, outside the repo. The project ID in `.firebaserc` is public (it is part of the site URL).
+
+### Any other static host
+
 `npm run build` produces a fully static site in `dist/`. Upload it to any static host (Netlify, Cloudflare Pages, GitHub Pages, S3 + CloudFront, nginx, …). Asset URLs are relative, so it also works from a sub-path such as `https://example.com/editor/`. Serve it over HTTPS.
 
 The build already includes:
@@ -66,7 +89,7 @@ The build already includes:
 - A strict **Content-Security-Policy** `<meta>` tag (scripts only from the site itself, plus the hash of the inline theme script). Styles allow `'unsafe-inline'` because Monaco injects styles at runtime.
 - **`third-party-licenses.md`** with the license notices of the bundled libraries (Monaco is MIT-licensed and requires its notice to be distributed).
 
-Some protections can only be sent as HTTP headers. Configure these on your host:
+Some protections can only be sent as HTTP headers (`firebase.json` already sets these for Firebase). Configure them on other hosts:
 
 ```text
 X-Frame-Options: DENY
